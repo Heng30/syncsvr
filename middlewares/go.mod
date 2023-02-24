@@ -1,13 +1,8 @@
-module syncsvr
+module middlewares
 
 go 1.19
 
-require (
-	github.com/gin-gonic/gin v1.9.0 // indirect
-	local/svr v0.0.0-00010101000000-000000000000
-)
-
-require local/db v0.0.0-00010101000000-000000000000
+require github.com/gin-gonic/gin v1.9.0
 
 require (
 	github.com/bytedance/sonic v1.8.0 // indirect
@@ -33,11 +28,4 @@ require (
 	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	local/middlewares v0.0.0-00010101000000-000000000000 // indirect
 )
-
-replace local/svr => ./svr
-
-replace local/middlewares => ./middlewares
-
-replace local/db => ./db

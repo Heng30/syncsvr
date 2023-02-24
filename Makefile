@@ -1,14 +1,21 @@
 #!/bin/bash
 
-
-run: main.go logger.go
+run: main.go
 	go run $^
 
 gen_denpendence:
 	go mod tidy
 
-install-dependence:
+download-dependence:
 	go mod download
 
 import-dependence:
 	go mod vendor
+
+
+
+ping:
+	curl "http://localhost:8080/ping"
+
+markCoins:
+	curl -v -H "Origin: heng30.com" "http://localhost:8080/1234/markCoins"
