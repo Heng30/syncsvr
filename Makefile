@@ -3,6 +3,9 @@
 run: main.go
 	go run $^
 
+build:
+	go build
+
 gen_denpendence:
 	go mod tidy
 
