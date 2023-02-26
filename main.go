@@ -9,17 +9,21 @@ import (
 )
 
 type Config struct {
-	Tokens []string
+	ListenAddr string
+	TestMode   bool
 }
 
+const DB_BAME string = "syncsvr.db"
+
 var confPath, dbPath string
-var appConf Config = Config{Tokens: []string{}}
+var appConf Config = Config{ListenAddr: ":8000", TestMode: false}
 
 func main() {
 	log.Println("start...")
 	initEnv()
-	db.Init(dbPath)
-	svr.Start(":8080")
+	db.Init(dbPath + "/" + DB_BAME)
+	defer db.Uninit()
+	svr.Start(appConf.ListenAddr, appConf.TestMode)
 	log.Fatalln("exit...")
 }
 
@@ -66,14 +70,14 @@ func loadConf() {
 }
 
 func defaultConf(path string) {
-    file, err := os.OpenFile(path, os.O_CREATE | os.O_WRONLY, 0666)
-    if err != nil {
-        log.Fatalln("Error:", err)
-    }
-    defer file.Close()
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatalln("Error:", err)
+	}
+	defer file.Close()
 
-    enc := json.NewEncoder(file)
-    if err := enc.Encode(appConf); err != nil {
-        log.Fatalln("Error:", err)
-    }
+	enc := json.NewEncoder(file)
+	if err := enc.Encode(appConf); err != nil {
+		log.Fatalln("Error:", err)
+	}
 }

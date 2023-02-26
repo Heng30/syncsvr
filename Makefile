@@ -18,7 +18,7 @@ import-dependence:
 
 
 ping:
-	curl "http://localhost:8080/ping"
+	curl "http://localhost:8000/ping"
 
 markCoins:
-	curl -v -H "Origin: heng30.com" "http://localhost:8080/1234/markCoins"
+	curl -v -H "Origin: heng30.com" "http://localhost:8000/testToken/markCoins"
