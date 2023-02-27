@@ -87,3 +87,16 @@ func update(table, name, value string) error {
 	}
 	return nil
 }
+
+func UpdateTableName(oldName, newName string) error {
+	s := fmt.Sprintf("ALTER TABLE %s RENAME TO %s", oldName, newName)
+	if stmt, err := sdb.Prepare(s); err != nil {
+		return err
+	} else {
+		if _, err := stmt.Exec(); err != nil {
+			return err
+		}
+	}
+	return nil
+
+}

@@ -2,10 +2,14 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
+	"fmt"
 	"local/db"
 	"local/svr"
 	"log"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 type Config struct {
@@ -14,17 +18,74 @@ type Config struct {
 }
 
 const DB_BAME string = "syncsvr.db"
+const VERSION string = "v0.0.1"
 
 var confPath, dbPath string
 var appConf Config = Config{ListenAddr: ":8000", TestMode: false}
 
+var (
+    queryToken = flag.Bool("query", false, "query all access tokens")
+	addToken = flag.String("add", "", "add access token")
+	delToken = flag.String("del", "", "delete access token")
+	updToken = flag.String("upd", "", "update access token")
+)
+
 func main() {
-	log.Println("start...")
+	parseArgs()
 	initEnv()
 	db.Init(dbPath + "/" + DB_BAME)
 	defer db.Uninit()
+
+	if flag.NFlag() > 0 {
+		runAsCln()
+	} else {
+		runAsSvr()
+	}
+}
+
+func parseArgs() {
+	flag.Usage = func() {
+		fmt.Printf("Usage: %s [-add <token>] | [del <token>] | [upd <oldToken,newToken>\n", filepath.Base(os.Args[0]))
+		flag.PrintDefaults()
+		fmt.Println()
+		fmt.Println("Version:", VERSION)
+		fmt.Println("Configure: ~/.config/syncsvr/config.json")
+		fmt.Println("Database: ~/.local/share/syncsvr/syncsvr.db")
+	}
+	flag.Parse()
+}
+
+func runAsCln() {
+    if *queryToken {
+        if tokens, err := db.QueryAccessTokens(); err != nil {
+            log.Fatalln(err)
+        } else {
+            fmt.Println(tokens)
+        }
+    } else if *addToken != "" {
+		if err := db.AddAccessToken(*addToken); err != nil {
+			log.Fatalln(err)
+		}
+	} else if *delToken != "" {
+		if err := db.DelAccessToken(*delToken); err != nil {
+			log.Fatalln(err)
+		}
+	} else if *updToken != "" {
+		tokens := strings.Split(*updToken, ",")
+		if len(tokens) != 2 {
+			log.Fatalln("Invalid format:", *updToken)
+		}
+        if err := db.UpdateTableName(tokens[0], tokens[1]); err != nil {
+			log.Fatalln(err)
+        }
+		if err := db.UpdateAccessToken(tokens[0], tokens[1]); err != nil {
+			log.Fatalln(err)
+		}
+	}
+}
+
+func runAsSvr() {
 	svr.Start(appConf.ListenAddr, appConf.TestMode)
-	log.Fatalln("exit...")
 }
 
 func initEnv() {
