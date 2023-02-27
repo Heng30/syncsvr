@@ -18,7 +18,6 @@ type Config struct {
 }
 
 const DB_BAME string = "syncsvr.db"
-const VERSION string = "v0.0.1"
 
 var confPath, dbPath string
 var appConf Config = Config{ListenAddr: ":8000", TestMode: false}
