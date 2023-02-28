@@ -9,11 +9,11 @@ import (
 )
 
 func markCoins(r gin.IRouter) {
-    r.GET("/:token/:name", getComFactory("token", "name"))
-    r.POST("/:token/:name", postComFactory("token", "name"))
+    r.GET("/:token/:name", getFactory("token", "name"))
+    r.POST("/:token/:name", postFactory("token", "name"))
 }
 
-func getComFactory(token, cname string) func(*gin.Context) {
+func getFactory(token, cname string) func(*gin.Context) {
 	return func(c *gin.Context) {
 		table := c.Param(token)
         name := c.Param(cname)
@@ -25,7 +25,7 @@ func getComFactory(token, cname string) func(*gin.Context) {
 	}
 }
 
-func postComFactory(token, cname string) func(*gin.Context) {
+func postFactory(token, cname string) func(*gin.Context) {
 	return func(c *gin.Context) {
 		table := c.Param(token)
         name := c.Param(cname)
