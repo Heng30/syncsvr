@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/gin-gonic/gin v1.9.0
+	github.com/unrolled/secure v1.0.7
 	local/db v0.0.0-00010101000000-000000000000
 )
 
