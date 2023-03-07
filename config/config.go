@@ -39,8 +39,8 @@ func Init() {
 			}
 		}
 	}
-    saveDefaultCert();
-    saveDefaultKey();
+	saveDefaultCert()
+	saveDefaultKey()
 	loadConf()
 }
 
