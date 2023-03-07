@@ -16,6 +16,10 @@
 - 通过`curl -X POST -d 'I am value' "http://localhost:8000/testToken/key"`。将`I am value` 存储到`testToken`表的`key`字段中。
 - 通过`curl -v "http://localhost:8000/testToken/key"`。将`testToken`表中的`key`字段关联的值获取出来。
 
+### 启用https
+- 修改配置文件`EnableTLS: true`
+- 程序启动会生成默认的证书和私钥文件，放置在`~/.config/syncsvr/cert.pem` 和 `~/.config/syncsvr/key.pem`。 默认证书仅支持本地回环地址访问。需要支持外部网络访问需要替换为自己的证书和私钥。
+
 ### 参考
 - [go安装依赖包（go get, go module）](https://blog.csdn.net/weixin_41519463/article/details/103501485)
 - [Golang设置代理](https://developer.aliyun.com/article/879662)
