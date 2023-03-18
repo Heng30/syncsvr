@@ -10,7 +10,7 @@
 - `syncsvr -query=true` 获取`访问token`
 - `syncsvr -add=<token>` 添加`访问token`
 - `syncsvr -del=<token>` 删除`访问token`
-- `syncsvr -upd=<token>` 更新`访问token`
+- `syncsvr -upd=<old_token,new_token>` 更新`访问token`
 
 在程序启动后会为每个`访问token`生成一张表。
 - 通过`curl -X POST -d 'I am value' "http://localhost:8000/testToken/key"`。将`I am value` 存储到`testToken`表的`key`字段中。
