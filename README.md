@@ -1,27 +1,29 @@
-#### syncsvr
-一个基于`Go gin`的http配置备份服务器。通过http `Post` 请求将数据存储到sqlite数据库中。通过http `Get` 请求获取数据。具体使用方法参考下面说明。
+[中文文档](./README.zh-CN.md)
 
-### 运行
+#### syncsvr
+An http configuration backup server based on `Go gin`. Data is stored in an SQLite database through an http `Post` request. Data can be retrieved through an http `Get` request. Please refer to the following instructions for specific usage.
+
+#### Running
 - `make gen_denpendence`
 - `make download-dependence`
 - `make run`
 
-### 使用
-- `syncsvr -query=true` 获取`访问token`
-- `syncsvr -add=<token>` 添加`访问token`
-- `syncsvr -del=<token>` 删除`访问token`
-- `syncsvr -upd=<old_token,new_token>` 更新`访问token`
+#### Usage
+- `syncsvr -query=true` to get the access token
+- `syncsvr -add=<token>` to add an access token
+- `syncsvr -del=<token>` to delete an access token
+- `syncsvr -upd=<old_token,new_token>` to update an access token
 
-在程序启动后会为每个`访问token`生成一张表。
-- 通过`curl -X POST -d 'I am value' "http://localhost:8000/testToken/key"`。将`I am value` 存储到`testToken`表的`key`字段中。
-- 通过`curl -v "http://localhost:8000/testToken/key"`。将`testToken`表中的`key`字段关联的值获取出来。
+After the program starts, a table will be generated for each access token.
+- Use `curl -X POST -d 'I am value' "http://localhost:8000/testToken/key"` to store `'I am value'` in the `'key'` field of the `'testToken'` table.
+- Use `curl -v "http://localhost:8000/testToken/key"` to retrieve the value associated with the `'key'` field in the `'testToken'` table.
 
-### 启用https
-- 修改配置文件`EnableTLS: true`
-- 程序启动会生成默认的证书和私钥文件，放置在`~/.config/syncsvr/cert.pem` 和 `~/.config/syncsvr/key.pem`。 默认证书仅支持本地回环地址访问。需要支持外部网络访问需要替换为自己的证书和私钥。
+#### Enable HTTPS
+- Modify the configuration file: set `EnableTLS: true`
+- The program will generate default certificate and private key files upon startup, placed in `~/.config/syncsvr/cert.pem` and `~/.config/syncsvr/key.pem`. The default certificate only supports accessing localhost. To support external network access, replace them with your own certificate and private key.
 
-### 参考
-- [go安装依赖包（go get, go module）](https://blog.csdn.net/weixin_41519463/article/details/103501485)
-- [Golang设置代理](https://developer.aliyun.com/article/879662)
-- [Gin 解决跨域问题跨域配置](https://juejin.cn/post/6871583587062415367)
-- [Go 入门指南](https://learnku.com/docs/the-way-to-go)
+#### References
+- [Installing dependency packages in Go (go get, go module)](https://blog.csdn.net/weixin_41519463/article/details/103501485)
+- [Setting up a proxy in Golang](https://developer.aliyun.com/article/879662)
+- [Gin: Solving Cross-Origin Resource Sharing (CORS) Issues](https://juejin.cn/post/6871583587062415367)
+- [The Way to Go: A Thorough Introduction to the Go Programming Language](https://learnku.com/docs/the-way-to-go)
